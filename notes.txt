@@ -1,0 +1,29 @@
+notes.txt
+
+-- Generate a secret key
+
+import secrets
+secrets.token_hex()
+
+
+-- DB create tables
+
+from flask_blog import db
+db.create_all()
+
+
+-- Hashing
+
+from flask_bcrypt import Bcrypt
+bcrypt = Bcrypt()
+hashed = bcrypt.generate_password_hash('abhinav').decode('utf-8')
+bcrypt.check_password_hash(hashed, 'abhinav')
+
+
+-- Creating an expiring token
+
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+s = Serializer('secret', 30)
+token = s.dumps({'user_id': 1}).decode('utf-8')
+token
+s.loads(token)
